@@ -13,7 +13,7 @@ export const Container = styled.main`
 `;
 
 export const Wrapper = styled.div`
-  max-width: 300px;
+  max-width: 350px;
   margin: auto;
 `;
 
@@ -24,6 +24,7 @@ export const FormContent = styled.div`
 export const Column = styled.div`
   flex: 1;
   align-self: flex-start;
+  max-width: 450px;
 `;
 
 export const Row = styled.div`
@@ -39,7 +40,7 @@ export const Title = styled.h2`
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
-  max-width: 100%;
+  max-width: 90%;
   margin-bottom: 20px;
   line-height: 44px;
 
@@ -64,22 +65,22 @@ export const SubtitleLogin = styled.p`
   margin-bottom: 35px;
 `;
 
-export const EsqueciText = styled.p`
+export const Termos = styled.p`
   font-family: "Open Sans";
   font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 19px;
-
-  color: #e5e044;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  margin-top: 35px;
 `;
 
-export const CriarText = styled.p`
+export const FazerLogin = styled.p`
   font-family: "Open Sans";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 19px;
+  margin-top: 15px;
 
   a {
     text-decoration: none;

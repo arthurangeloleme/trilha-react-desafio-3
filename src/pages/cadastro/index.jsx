@@ -1,25 +1,35 @@
+import { api } from "../../services/api";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { MdEmail, MdLock } from "react-icons/md";
+import { MdFace6, MdEmail, MdLock } from "react-icons/md";
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
-import { api } from "../../services/api";
 import {
   Container,
   Title,
   Column,
   TitleLogin,
   SubtitleLogin,
-  EsqueciText,
-  CriarText,
-  Row,
+  Termos,
+  FazerLogin,
   Wrapper,
   FormContent,
 } from "./styles";
 
-const Login = () => {
-  const navigate = useNavigate();
+const Cadastro = () => {
+  const onSubmit = async (formData) => {
+    try {
+      const response = await api.post("http://localhost:8001/users", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Formulário salvo com sucesso:", response.data);
+    } catch (error) {
+      console.error("Erro ao salvar o formulário:", error);
+    }
+  };
 
   const {
     control,
@@ -29,23 +39,6 @@ const Login = () => {
     reValidateMode: "onChange",
     mode: "onChange",
   });
-
-  const onSubmit = async (formData) => {
-    try {
-      const { data } = await api.get(
-        `/users?email=${formData.email}&senha=${formData.senha}`
-      );
-
-      if (data.length && data[0].id) {
-        navigate("/feed");
-        return;
-      }
-
-      alert("Usuário ou senha inválido");
-    } catch (e) {
-      console.log("Exception Error", e);
-    }
-  };
 
   return (
     <>
@@ -59,10 +52,17 @@ const Login = () => {
         </Column>
         <Column>
           <Wrapper>
-            <TitleLogin>Faça seu cadastro</TitleLogin>
-            <SubtitleLogin>Faça seu login e make the change._</SubtitleLogin>
+            <TitleLogin>Comece agora grátis</TitleLogin>
+            <SubtitleLogin>Crie sua conta e make the change._</SubtitleLogin>
             <FormContent>
               <form onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                  placeholder="Nome completo"
+                  leftIcon={<MdFace6 />}
+                  name="nome"
+                  control={control}
+                />
+                {errors.nome && <span>Nome completo é obrigatório</span>}
                 <Input
                   placeholder="E-mail"
                   leftIcon={<MdEmail />}
@@ -78,15 +78,20 @@ const Login = () => {
                   control={control}
                 />
                 {errors.senha && <span>Senha é obrigatório</span>}
-                <Button title="Entrar" variant="secondary" type="submit" />
+                <Button
+                  title="Criar minha conta"
+                  variant="secondary"
+                  type="submit"
+                />
               </form>
             </FormContent>
-            <Row>
-              <EsqueciText>Esqueci minha senha</EsqueciText>
-              <CriarText>
-                <a href="./cadastro">Criar conta</a>
-              </CriarText>
-            </Row>
+            <Termos>
+              Ao clicar em "criar minha conta grátis", declaro que aceito as
+              Políticas de Privacidade e os Termos de Uso da DIO.
+            </Termos>
+            <FazerLogin>
+              Já tenho conta. <a href="./login">Fazer login</a>
+            </FazerLogin>
           </Wrapper>
         </Column>
       </Container>
@@ -94,4 +99,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { Cadastro };
